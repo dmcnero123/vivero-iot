@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --green-900: #0f2d1a;
+  --green-800: #1a4a2a;
+  --green-700: #1f6b35;
+  --green-600: #2d8a45;
+  --green-500: #3aab57;
+  --green-400: #5cc977;
+  --green-300: #8ddea0;
+  --green-200: #bbefca;
+  --green-100: #e0f7e8;
+  --green-50:  #f2fbf5;
+
+  --white:     #ffffff;
+  --gray-50:   #f8faf8;
+  --gray-100:  #eef2ee;
+  --gray-200:  #dce6dc;
+  --gray-400:  #9aac9a;
+  --gray-600:  #5a6e5a;
+  --gray-800:  #2c382c;
+
+  --font-display: 'DM Serif Display', serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+
+  --shadow-sm: 0 1px 4px rgba(15,45,26,0.07);
+  --shadow-md: 0 4px 16px rgba(15,45,26,0.10);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: var(--font-body);
+  background: var(--gray-50);
+  color: var(--gray-800);
+  -webkit-font-smoothing: antialiased;
+}
+
+button { cursor: pointer; font-family: var(--font-body); }
+input  { font-family: var(--font-body); }

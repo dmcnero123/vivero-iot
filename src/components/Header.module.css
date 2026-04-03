@@ -1,0 +1,66 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.75rem 2.5rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  flex-wrap: wrap;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--green-900);
+  line-height: 1;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--gray-400);
+  margin-top: 6px;
+}
+
+.connBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  padding: 6px 6px 6px 14px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gray-400);
+  flex-shrink: 0;
+}
+
+.input {
+  border: none;
+  outline: none;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--gray-800);
+  background: transparent;
+  width: 220px;
+}
+
+.btn {
+  padding: 7px 16px;
+  border-radius: var(--radius-xl);
+  border: none;
+  background: var(--green-700);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.btn:hover { background: var(--green-600); }
+
+.on { background: var(--green-500) !important; box-shadow: 0 0 6px var(--green-400); }

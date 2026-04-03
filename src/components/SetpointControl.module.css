@@ -1,0 +1,57 @@
+.card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-600);
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--green-700);
+}
+
+.slider {
+  width: 100%;
+  accent-color: var(--green-600);
+  margin-bottom: 4px;
+}
+
+.minmax {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--gray-400);
+  margin-bottom: 1rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--green-700);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn:hover  { background: var(--green-600); }
+.btn:active { transform: scale(0.98); }
+.enviado { background: var(--green-500) !important; }
