@@ -1,0 +1,139 @@
+/* CONTENEDOR */
+.container {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+/* TITULO */
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--green-800);
+  margin-bottom: 15px;
+}
+
+/* FORM */
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* INPUTS */
+.input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: 0.2s;
+}
+
+.input:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34,197,94,0.2);
+}
+
+/* SELECT */
+.select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* BOTÓN CREAR */
+.createBtn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.createBtn:hover {
+  background: #15803d;
+  transform: translateY(-1px);
+}
+
+/* LISTA USUARIOS */
+.userList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* CARD USUARIO */
+.userCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #eee;
+  transition: 0.2s;
+}
+
+.userCard:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* INFO */
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-weight: 600;
+  color: #111;
+}
+
+.userRole {
+  font-size: 12px;
+  background: #dcfce7;
+  color: #166534;
+  padding: 4px 8px;
+  border-radius: 20px;
+  margin-top: 4px;
+  width: fit-content;
+}
+
+/* BOTONES */
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: 0.2s;
+}
+
+/* EDITAR */
+.edit {
+  background: #3b82f6;
+  color: white;
+}
+
+.edit:hover {
+  background: #2563eb;
+}
+
+/* ELIMINAR */
+.delete {
+  background: #ef4444;
+  color: white;
+}
+
+.delete:hover {
+  background: #dc2626;
+}

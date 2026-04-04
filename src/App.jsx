@@ -1,8 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import './index.css'
 import Dashboard from './pages/Dashboard'
+import Login from './pages/Login'
+import { supabase } from './supabaseClient'
 
 export default function App() {
+  const [session, setSession] = useState(null)
+
   const [data, setData] = useState({
     TEMPERATURA: null,
     HUMEDAD: null,
@@ -29,14 +33,14 @@ export default function App() {
     const ws = new WebSocket(url)
     wsRef.current = ws
 
-    ws.onopen  = () => setConnected(true)
+    ws.onopen = () => setConnected(true)
     ws.onclose = () => setConnected(false)
     ws.onerror = () => setConnected(false)
 
     ws.onmessage = (e) => {
       try {
-        const msg     = JSON.parse(e.data)
-        const topic   = msg.payload.topic
+        const msg = JSON.parse(e.data)
+        const topic = msg.payload.topic
         const payload = msg.payload.payload
 
         setData(prev => ({ ...prev, [topic]: payload }))
@@ -52,7 +56,7 @@ export default function App() {
             return { ...prev, [topic]: arr.slice(-50) }
           })
         }
-      } catch {}
+      } catch { }
     }
   }
 
@@ -61,10 +65,39 @@ export default function App() {
     return () => wsRef.current?.close()
   }, [])
 
+  useEffect(() => {
+    const cargarSesion = async () => {
+      const { data } = await supabase.auth.getSession()
+
+      if (data.session) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', data.session.user.id)
+          .single()
+
+        setSession({
+          user: data.session.user,
+          profile: profile,
+        })
+      }
+    }
+
+    cargarSesion()
+  }, [])
+
   const enviar = (topic, valor) => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify({ topic, payload: valor }))
     }
+  }
+  const logout = async () => {
+    await supabase.auth.signOut()
+    setSession(null)
+  }
+
+  if (!session) {
+    return <Login onLogin={setSession} />
   }
 
   return (
@@ -74,6 +107,8 @@ export default function App() {
       connected={connected}
       onConectar={conectar}
       onEnviar={enviar}
+      session={session}
+      onLogout={logout}
     />
   )
 }
