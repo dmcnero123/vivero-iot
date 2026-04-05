@@ -1,112 +1,119 @@
 .sidebar {
   width: 220px;
-  flex-shrink: 0;
+  min-height: 100vh;
   background: var(--green-900);
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.25rem;
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  padding: 0;
+  flex-shrink: 0;
 }
 
+/* BRAND */
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 2.5rem;
+  gap: 10px;
+  padding: 24px 18px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
 }
 
-.brandIcon { font-size: 28px; line-height: 1; }
+.brandIcon {
+  font-size: 26px;
+  line-height: 1;
+}
 
 .brandName {
   font-family: var(--font-display);
-  font-size: 18px;
-  color: var(--white);
+  font-size: 15px;
+  color: var(--green-200);
+  line-height: 1.2;
 }
 
 .brandSub {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--green-400);
+  letter-spacing: 0.04em;
   margin-top: 2px;
 }
 
+/* NAV */
 .nav {
+  flex: 1;
+  padding: 14px 10px;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  flex: 1;
+  overflow-y: auto;
 }
 
 .navLabel {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--green-500);
-  font-weight: 600;
-  padding: 0 8px;
-  margin-top: 1.25rem;
-  margin-bottom: 4px;
   display: block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green-400);
+  padding: 14px 10px 5px;
 }
 
 .navItem {
-  font-size: 14px;
-  color: var(--green-200);
-  padding: 8px 12px;
-  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--green-300);
+  font-size: 13px;
+  font-weight: 400;
+  padding: 9px 12px;
+  border-radius: 9px;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
   cursor: pointer;
-  transition: background 0.15s;
-  text-decoration: none;
 }
 
 .navItem:hover {
-  background: var(--green-800);
+  background: rgba(255,255,255,0.07);
   color: var(--white);
 }
 
+.navItem.active {
+  background: var(--green-700);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.navIcon {
+  font-size: 15px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* FOOTER */
 .footer {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-top: 1rem;
-  border-top: 1px solid var(--green-800);
+  padding: 16px 18px;
+  border-top: 1px solid rgba(255,255,255,0.07);
 }
 
 .connDot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--gray-400);
+  background: var(--gray-600);
   flex-shrink: 0;
+  transition: background 0.3s;
+}
+
+.connDot.on {
+  background: var(--green-400);
+  box-shadow: 0 0 6px var(--green-400);
 }
 
 .connText {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--green-400);
-}
-.on { background: var(--green-400) !important; box-shadow: 0 0 6px var(--green-400); }
-
-.navItem {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  color: #d1fae5;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  width: 100%;
-  text-align: left;
-}
-
-.navItem:hover {
-  background: rgba(255,255,255,0.08);
-}
-
-.active {
-  background: rgba(255,255,255,0.15);
-  font-weight: 600;
 }

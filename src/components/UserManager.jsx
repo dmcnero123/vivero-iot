@@ -21,6 +21,11 @@ export default function UserManager() {
 
   // 🔹 crear usuario
   const crearUsuario = async () => {
+    if (!email || !password || !nombre) {
+      alert('Completa todos los campos')
+      return
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -31,16 +36,30 @@ export default function UserManager() {
       return
     }
 
-    await supabase.from('profiles').insert({
-      id: data.user.id,
-      nombre,
-      rol,
-    })
+    if (!data.user) {
+      alert('Error al crear usuario')
+      return
+    }
 
-    alert('Usuario creado')
+    const { error: errorPerfil } = await supabase
+      .from('profiles')
+      .insert({
+        id: data.user.id,
+        nombre,
+        rol,
+      })
+
+    if (errorPerfil) {
+      alert(errorPerfil.message)
+      return
+    }
+
+    alert('Usuario creado correctamente')
+
     setNombre('')
     setEmail('')
     setPassword('')
+
     cargarUsuarios()
   }
 
@@ -62,7 +81,7 @@ export default function UserManager() {
 
   return (
     <div className={styles.container}>
-      
+
       <h2 className={styles.title}>Gestión de Usuarios</h2>
 
       {/* FORM */}
@@ -107,7 +126,7 @@ export default function UserManager() {
       <div className={styles.userList}>
         {users.map(u => (
           <div key={u.id} className={styles.userCard}>
-            
+
             <div className={styles.userInfo}>
               <span className={styles.userName}>{u.nombre}</span>
               <span className={styles.userRole}>{u.rol}</span>

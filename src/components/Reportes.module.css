@@ -1,0 +1,185 @@
+.wrapper {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--gray-800);
+}
+
+/* CONTROLES */
+.controlCard {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 560px;
+}
+.modoGroup {
+  display: flex;
+  gap: 10px;
+}
+.modoBtn {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--gray-600);
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.modoBtn:hover { border-color: var(--green-400); }
+.modoBtnActivo {
+  border-color: var(--green-600) !important;
+  background: var(--green-50);
+  color: var(--green-700);
+  font-weight: 700;
+}
+.rangoGroup {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.rangoLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+.rangoInput {
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 13px;
+  color: var(--gray-800);
+  outline: none;
+}
+.rangoInput:focus { border-color: var(--green-500); }
+.btnPDF {
+  background: var(--green-600);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 11px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  width: fit-content;
+  transition: background 0.15s;
+}
+.btnPDF:hover { background: var(--green-700); }
+.btnPDF:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* REPORTE */
+.reporte {
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.reporteHeader {
+  border-bottom: 2px solid var(--green-600);
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.reporteLogo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--green-700);
+  font-family: var(--font-display);
+}
+.reporteTitulo {
+  font-size: 24px;
+  font-family: var(--font-display);
+  color: var(--gray-800);
+}
+.reporteFecha {
+  font-size: 12px;
+  color: var(--gray-400);
+  font-family: var(--font-mono);
+}
+.reportePeriodo {
+  font-size: 13px;
+  color: var(--gray-600);
+  margin-top: 4px;
+}
+.reporteSeccion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.reporteSubtitulo {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gray-800);
+  border-left: 3px solid var(--green-500);
+  padding-left: 10px;
+}
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.tabla th {
+  background: var(--green-50);
+  color: var(--green-800);
+  font-weight: 600;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 2px solid var(--green-200);
+  font-size: 12px;
+}
+.tabla td {
+  padding: 10px 12px;
+  color: var(--gray-600);
+  border-bottom: 1px solid var(--gray-100);
+}
+.tabla tr:last-child td { border-bottom: none; }
+.tabla tr:hover td { background: var(--gray-50); }
+.sinDatos {
+  font-size: 13px;
+  color: var(--gray-400);
+  padding: 16px;
+  text-align: center;
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--gray-200);
+}
+.reportePie {
+  font-size: 11px;
+  color: var(--gray-400);
+  text-align: center;
+  border-top: 1px solid var(--gray-100);
+  padding-top: 16px;
+  font-family: var(--font-mono);
+}
+
+/* PRINT */
+@media print {
+  .noPrint { display: none !important; }
+  .wrapper { padding: 0; }
+  .reporte {
+    box-shadow: none;
+    border-radius: 0;
+    padding: 20px;
+  }
+}

@@ -6,7 +6,11 @@ import { supabase } from './supabaseClient'
 
 export default function App() {
   const [session, setSession] = useState(null)
-
+  // Agrega este estado junto a los otros useState
+  const [setpoints, setSetpoints] = useState({
+    humedad: 30,
+    temperatura: 25,
+  })
   const [data, setData] = useState({
     TEMPERATURA: null,
     HUMEDAD: null,
@@ -91,6 +95,7 @@ export default function App() {
       wsRef.current.send(JSON.stringify({ topic, payload: valor }))
     }
   }
+
   const logout = async () => {
     await supabase.auth.signOut()
     setSession(null)
@@ -109,6 +114,8 @@ export default function App() {
       onEnviar={enviar}
       session={session}
       onLogout={logout}
+      setpoints={setpoints}
+      setSetpoints={setSetpoints}
     />
   )
 }
