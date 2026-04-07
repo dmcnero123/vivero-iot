@@ -3,7 +3,7 @@ import styles from './Historial.module.css'
 
 // ── Cambia esta URL cuando tengas Grafana corriendo ──────────────────
 // Ejemplo: 'http://192.168.18.200:3000/d/tu-dashboard-id?kiosk'
-const GRAFANA_URL = null
+const GRAFANA_URL = 'http://localhost:4000/d/dfi7lk9hchtkwf/dashboard?orgId=1&refresh=5s&from=1775479795006&to=1775522995006'
 
 export default function Historial() {
   const [urlCustom, setUrlCustom] = useState(GRAFANA_URL || '')
@@ -52,7 +52,6 @@ export default function Historial() {
             </>
           )}
         </div>
-
         {/* IFRAME O PLACEHOLDER */}
         {urlActiva ? (
           <div className={styles.iframeBox}>

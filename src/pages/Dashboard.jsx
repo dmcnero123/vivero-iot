@@ -37,7 +37,7 @@ function Proximamente({ titulo, icono }) {
   )
 }
 
-export default function Dashboard({ data, history, connected, onConectar, onEnviar, session, onLogout, setpoints, setSetpoints }) {
+export default function Dashboard({ data, history, connected, onConectar, onEnviar, session, onLogout, setpoints, setSetpoints, bitacora, setBitacora }) {
 
   const [view, setView] = useState('dashboard')
 
@@ -75,7 +75,7 @@ export default function Dashboard({ data, history, connected, onConectar, onEnvi
         )
 
       case 'riego':
-        return <Riego data={data} onEnviar={onEnviar} />
+        return <Riego data={data} onEnviar={onEnviar} bitacora={bitacora} setBitacora={setBitacora} />
 
       case 'camara':
         return <Camara data={data} />
@@ -87,7 +87,7 @@ export default function Dashboard({ data, history, connected, onConectar, onEnvi
         return <Historial />
 
       case 'reportes':
-        return <Reportes history={history} />
+        return <Reportes history={history} bitacora={bitacora} />
 
       case 'parametros':
         return <Parametros onEnviar={onEnviar} setpoints={setpoints} setSetpoints={setSetpoints} />

@@ -95,7 +95,7 @@ export default function App() {
       wsRef.current.send(JSON.stringify({ topic, payload: valor }))
     }
   }
-
+  const [bitacora, setBitacora] = useState([])
   const logout = async () => {
     await supabase.auth.signOut()
     setSession(null)
@@ -116,6 +116,8 @@ export default function App() {
       onLogout={logout}
       setpoints={setpoints}
       setSetpoints={setSetpoints}
+      bitacora={bitacora}
+      setBitacora={setBitacora}
     />
   )
 }

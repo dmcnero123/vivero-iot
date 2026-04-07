@@ -183,3 +183,40 @@
     padding: 20px;
   }
 }
+.botonesRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btnConsultar {
+  background: var(--green-700);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 11px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.btnConsultar:hover { background: var(--green-800); }
+.btnConsultar:disabled { opacity: 0.6; cursor: not-allowed; }
+.error {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+}
+.esperando {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px 24px;
+  color: var(--gray-400);
+  font-size: 13px;
+  text-align: center;
+}
+.esperando span { font-size: 40px; }

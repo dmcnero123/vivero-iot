@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import styles from './Riego.module.css'
+import { supabase } from '../supabaseClient'
 
 // ── Formatea fecha y hora legible ────────────────────────────────────
 function formatFecha(date) {
@@ -16,7 +17,7 @@ function formatDuracion(ms) {
   if (!ms) return '--'
   const seg = Math.floor(ms / 1000)
   const min = Math.floor(seg / 60)
-  const s   = seg % 60
+  const s = seg % 60
   if (min === 0) return `${s}s`
   return `${min}m ${s}s`
 }
@@ -35,50 +36,75 @@ function EstadoCard({ icono, label, valor, activo }) {
 }
 
 // ── Componente principal ─────────────────────────────────────────────
-export default function Riego({ data, onEnviar }) {
-  const bombaActiva  = data.BOMBA   === 1 || data.BOMBA   === '1' || data.BOMBA   === true
+export default function Riego({ data, onEnviar, bitacora, setBitacora }) {
+  const bombaActiva = data.BOMBA === 1 || data.BOMBA === '1' || data.BOMBA === true
   const valvulaAbierta = data.VALVULA === 1 || data.VALVULA === '1' || data.VALVULA === true
 
   // Bitácora de riegos
-  const [bitacora, setBitacora] = useState([])
   const [confirmando, setConfirmando] = useState(false)
 
   // Tracking de inicio/fin de riego
-  const riendoRef    = useRef(false)
-  const inicioRef    = useRef(null)
-  const ultimoRef    = useRef(null)
+  const riendoRef = useRef(false)
+  const inicioRef = useRef(null)
+  const ultimoRef = useRef(null)
 
   useEffect(() => {
     if (bombaActiva && !riendoRef.current) {
-      // Empezó a regar
       riendoRef.current = true
       inicioRef.current = new Date()
     }
 
     if (!bombaActiva && riendoRef.current) {
-      // Terminó de regar
       riendoRef.current = false
-      const fin      = new Date()
-      const inicio   = inicioRef.current
+      const fin = new Date()
+      const inicio = inicioRef.current
       const duracion = fin - inicio
 
       const entrada = {
-        id:       Date.now(),
-        fecha:    formatFecha(inicio),
-        hora:     formatHora(inicio),
-        fin:      formatHora(fin),
+        fecha: formatFecha(inicio),
+        hora_inicio: formatHora(inicio),
+        hora_fin: formatHora(fin),
         duracion: formatDuracion(duracion),
-        tipo:     'Automático',
+        tipo: 'Automático',
       }
 
-      ultimoRef.current = entrada
-      setBitacora(prev => [entrada, ...prev].slice(0, 50))
+      // Guarda en Supabase
+      supabase.from('bitacora_riego').insert(entrada).then(({ error }) => {
+        if (error) console.error('Error guardando bitácora:', error)
+      })
+
+      // También actualiza el estado local
+      setBitacora(prev => [{ id: Date.now(), ...entrada }, ...prev].slice(0, 50))
+      ultimoRef.current = { ...entrada }
     }
   }, [bombaActiva])
+  useEffect(() => {
+    const cargar = async () => {
+      const { data, error } = await supabase
+        .from('bitacora_riego')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(50)
+
+      if (!error && data) {
+        setBitacora(data.map(r => ({
+          id: r.id,
+          fecha: r.fecha,
+          hora: r.hora_inicio,
+          fin: r.hora_fin,
+          duracion: r.duracion,
+          tipo: r.tipo,
+        })))
+      }
+    }
+    cargar()
+  }, [])
 
   // Botón forzar riego
   const handleRegar = () => {
     onEnviar('MANUAL', 1)
+    // marcamos que el próximo riego será manual
+    riendoRef.current = false
     setConfirmando(false)
   }
   const handleDetener = () => {
