@@ -14,6 +14,7 @@ import Camara from '../components/Camara'
 import Historial from '../components/Historial'
 import Parametros from '../components/Parametros'
 import Reportes from '../components/Reportes'
+import PrediccionPlagas from '../components/PrediccionPlagas'
 
 import styles from './Dashboard.module.css'
 
@@ -37,7 +38,7 @@ function Proximamente({ titulo, icono }) {
   )
 }
 
-export default function Dashboard({ data, history, connected, onConectar, onEnviar, session, onLogout, setpoints, setSetpoints, bitacora, setBitacora }) {
+export default function Dashboard({ data, history, connected, onConectar, onEnviar, session, onLogout, setpoints, setSetpoints, bitacora, setBitacora, prediccion }) {
 
   const [view, setView] = useState('dashboard')
 
@@ -81,7 +82,7 @@ export default function Dashboard({ data, history, connected, onConectar, onEnvi
         return <Camara data={data} />
 
       case 'plagas':
-        return <Proximamente titulo="IA Detección de Plagas" icono="🧠" />
+        return <PrediccionPlagas prediccion={prediccion} data={data} />
 
       case 'historial':
         return <Historial />
