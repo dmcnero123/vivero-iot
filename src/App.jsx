@@ -42,26 +42,42 @@ export default function App() {
     ws.onerror = () => setConnected(false)
 
     ws.onmessage = (e) => {
-      try {
-        const msg = JSON.parse(e.data)
-        const topic = msg.payload.topic
-        const payload = msg.payload.payload
+  try {
+    const msg = JSON.parse(e.data)
 
-        setData(prev => ({ ...prev, [topic]: payload }))
-
-        const sensoresConHistorial = ['TEMPERATURA', 'HUMEDAD', 'TEMP_AMBIENTE', 'HUMEDAD_AMBIENTE']
-
-        if (sensoresConHistorial.includes(topic)) {
-          const time = new Date().toLocaleTimeString('es', {
-            hour: '2-digit', minute: '2-digit', second: '2-digit'
-          })
-          setHistory(prev => {
-            const arr = [...(prev[topic] || []), { time, value: parseFloat(payload) }]
-            return { ...prev, [topic]: arr.slice(-50) }
-          })
-        }
-      } catch { }
+    // El payload puede ser string JSON (cuando viene de http request)
+    // o un objeto directo (cuando viene de los sensores)
+    let inner = msg.payload
+    if (typeof inner === 'string') {
+      try { inner = JSON.parse(inner) } catch { }
     }
+
+    const topic = inner?.topic
+    const payload = inner?.payload
+
+    // ── Mensaje de predicción de plagas ──────────────────
+    if (topic === 'PLAGA') {
+      setPrediccion(inner)
+      return
+    }
+
+    // ── Mensajes normales de sensores ────────────────────
+    if (!topic || payload === undefined) return
+
+    setData(prev => ({ ...prev, [topic]: payload }))
+
+    const sensoresConHistorial = ['TEMPERATURA', 'HUMEDAD', 'TEMP_AMBIENTE', 'HUMEDAD_AMBIENTE']
+    if (sensoresConHistorial.includes(topic)) {
+      const time = new Date().toLocaleTimeString('es', {
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      })
+      setHistory(prev => {
+        const arr = [...(prev[topic] || []), { time, value: parseFloat(payload) }]
+        return { ...prev, [topic]: arr.slice(-50) }
+      })
+    }
+  } catch { }
+}
   }
 
   useEffect(() => {
@@ -100,6 +116,7 @@ export default function App() {
     await supabase.auth.signOut()
     setSession(null)
   }
+  const [prediccion, setPrediccion] = useState(null)
 
   if (!session) {
     return <Login onLogin={setSession} />
@@ -118,6 +135,7 @@ export default function App() {
       setSetpoints={setSetpoints}
       bitacora={bitacora}
       setBitacora={setBitacora}
+      prediccion={prediccion}
     />
   )
 }

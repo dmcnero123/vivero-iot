@@ -6,3 +6,6 @@ npm install @supabase/supabase-js
 
 para correr el programa 
 npm run dev
+
+
+Agregando mas cambios
