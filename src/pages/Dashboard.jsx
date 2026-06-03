@@ -14,11 +14,7 @@ import Camara from '../components/Camara'
 import Historial from '../components/Historial'
 import Parametros from '../components/Parametros'
 import Reportes from '../components/Reportes'
-<<<<<<< HEAD
-import Vision from '../components/Vision' // <--- 1. IMPORTAMOS TU COMPONENTE DE IA
-=======
-import PrediccionPlagas from '../components/PrediccionPlagas'
->>>>>>> 6ff21e306e576145a3eb629e7a7f72f730a02cab
+import Vision from '../components/Vision' 
 
 import styles from './Dashboard.module.css'
 
@@ -86,11 +82,7 @@ export default function Dashboard({ data, history, connected, onConectar, onEnvi
         return <Camara data={data} />
 
       case 'plagas':
-<<<<<<< HEAD
-        return <Vision /> // <--- 2. REEMPLAZAMOS EL PROXIMAMENTE POR TU COMPONENTE REAL
-=======
-        return <PrediccionPlagas prediccion={prediccion} data={data} />
->>>>>>> 6ff21e306e576145a3eb629e7a7f72f730a02cab
+        return <Vision /> 
 
       case 'historial':
         return <Historial />
