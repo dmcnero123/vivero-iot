@@ -1,0 +1,205 @@
+.wrapper {
+  padding: 24px;
+  max-width: 1100px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.titulo {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--gray-800, #1f2937);
+  font-family: var(--font-display, sans-serif);
+  margin: 0;
+}
+.timestamp {
+  font-size: 12px;
+  color: var(--gray-400, #9ca3af);
+}
+
+/* Grid principal */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 800px) {
+  .grid { grid-template-columns: 1fr; }
+}
+.colLeft, .colRight {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Card base */
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+.cardLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+/* Nivel de riesgo */
+.riesgoNivel {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.accion {
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+/* Plaga */
+.plagaNombre {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.plagaDesc {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+.accionesTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+}
+.accionesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.accionItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.4;
+}
+.accionBullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+/* Barras de probabilidad */
+.barraRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.barraLabel {
+  font-size: 12px;
+  color: #6b7280;
+  width: 90px;
+  flex-shrink: 0;
+}
+.barraTrack {
+  flex: 1;
+  height: 8px;
+  background: #f3f4f6;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.barraFill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+.barraVal {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  min-width: 32px;
+  text-align: right;
+}
+
+/* Chips de sensores */
+.chipsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+.chipIcon { font-size: 20px; }
+.chipLabel {
+  font-size: 11px;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+.chipVal {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Historial */
+.historialList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.historialRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: #f9fafb;
+  font-size: 12px;
+}
+.historialHora { color: #9ca3af; width: 60px; flex-shrink: 0; }
+.historialRiesgo { font-weight: 600; width: 70px; }
+.historialPlaga { flex: 1; color: #374151; }
+.historialProb { color: #6b7280; width: 36px; text-align: right; }
+.sinHistorial { font-size: 13px; color: #9ca3af; text-align: center; padding: 12px 0; }
+
+/* Esperando */
+.esperando {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  gap: 12px;
+  text-align: center;
+}
+.esperandoIcon { font-size: 52px; }
+.esperandoTitulo { font-size: 20px; color: #374151; margin: 0; }
+.esperandoDesc { font-size: 13px; color: #9ca3af; line-height: 1.6; margin: 0; }
