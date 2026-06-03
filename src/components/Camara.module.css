@@ -1,190 +1,274 @@
+/* DISTRIBUCIÓN EN PANTALLA TIPO DASHBOARD UNIFORME */
 .wrapper {
-  padding: 24px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr; /* Divide el espacio disponible horizontalmente de forma limpia */
+  gap: 20px;
+  padding: 8px 24px 24px 24px;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.leftColumn, .rightColumn {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
+
 .section {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-.sectionTitle {
-  font-family: var(--font-display);
-  font-size: 17px;
-  color: var(--gray-800);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.badge {
-  background: var(--green-600);
-  color: white;
-  font-size: 11px;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 2px 8px;
-  font-family: var(--font-body);
+
+/* Forzar que la sección del historial llene todo el alto vertical disponible de la grilla */
+.historySection {
+  height: 100%;
+  max-height: 485px; 
 }
 
-/* PIR CARD */
-.pirCard {
-  background: var(--white);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  padding: 20px;
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 }
+
+.badge {
+  background: #10b981;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 1px 6px;
+}
+
+/* COMPONENTE INTERACTIVO PIR */
+.pirCard {
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
 .pirDot {
-  width: 14px;
-  height: 14px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
-  background: var(--gray-200);
+  background: #cbd5e1;
   flex-shrink: 0;
-  transition: background 0.3s, box-shadow 0.3s;
 }
+
 .pirOn {
   background: #ef4444;
   box-shadow: 0 0 10px #ef4444;
+  animation: pulsoAlerta 1s infinite alternate;
 }
-.pirEstado {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--gray-800);
+
+@keyframes pulsoAlerta {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(1.12); opacity: 0.7; }
 }
+
+.pirInfo {
+  display: flex;
+  flex-direction: column;
+}
+
 .pirDesc {
-  font-size: 12px;
-  color: var(--gray-400);
-  margin-top: 3px;
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 1px;
 }
+
 .pirContador {
   margin-left: auto;
   text-align: center;
+  background: rgba(0, 0, 0, 0.02);
+  padding: 4px 10px;
+  border-radius: 6px;
 }
+
 .pirNum {
   display: block;
-  font-family: var(--font-mono);
-  font-size: 28px;
+  font-family: monospace;
+  font-size: 20px;
   font-weight: 700;
-  color: var(--green-600);
+  color: #10b981;
   line-height: 1;
 }
+
 .pirNumLabel {
-  font-size: 10px;
-  color: var(--gray-400);
+  font-size: 9px;
+  color: #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
-/* STREAM */
-.streamBox {
+/* CABECERA DE CÁMARA Y CONFIGURACIÓN DE BOTÓN TÉCNICO */
+.cameraHeader {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
 }
+
 .btnVer {
-  background: var(--green-600);
+  background: #2563eb;
   color: white;
   border: none;
-  border-radius: var(--radius-md);
-  padding: 10px 20px;
-  font-size: 14px;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 12px;
   font-weight: 600;
-  width: fit-content;
-  transition: background 0.15s;
-}
-.btnVer:hover { background: var(--green-700); }
-.stream {
-  width: 100%;
-  max-width: 640px;
-  border-radius: var(--radius-md);
-  border: 2px solid var(--gray-200);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
 }
 
-/* PLACEHOLDER */
-.placeholder {
-  background: var(--gray-50);
-  border: 1px dashed var(--gray-200);
-  border-radius: var(--radius-md);
-  padding: 36px 24px;
+.btnVer:hover {
+  background: #1d4ed8;
+}
+
+.btnActive {
+  background: #dc2626;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
+}
+.btnActive:hover {
+  background: #b91c1c;
+}
+
+/* CONTENEDORES DE VIDEO UNIFORMES (ALTURA FIJA CONTROLADA) */
+.streamContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.stream {
+  width: 100%;
+  height: 260px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #e2e8f0;
+}
+
+.simuladorBox {
+  width: 100%;
+  height: 260px;
+  background-color: #0f172a;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  text-align: center;
-}
-.placeholderIcon { font-size: 42px; }
-.placeholderTitulo {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--gray-600);
-}
-.placeholderDesc {
-  font-size: 13px;
-  color: var(--gray-400);
-  max-width: 400px;
-  line-height: 1.6;
-}
-.placeholderEjemplo {
-  font-size: 12px;
-  color: var(--gray-400);
-}
-.placeholderEjemplo code, .placeholderDesc code {
-  background: var(--gray-100);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--gray-800);
+  justify-content: center;
+  color: #94a3b8;
+  position: relative;
 }
 
-/* HISTORIAL */
-.sinRegistros {
-  font-size: 13px;
-  color: var(--gray-400);
+.simuladorTag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #ef4444;
+  font-weight: bold;
+  font-size: 10px;
+  font-family: monospace;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.placeholderBox {
+  width: 100%;
+  height: 260px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 20px;
   text-align: center;
-  background: var(--gray-50);
-  border-radius: var(--radius-md);
-  border: 1px dashed var(--gray-200);
 }
-.tabla {
-  background: var(--white);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+
+/* TABLA HISTÓRICA CON SCROLL INTERNO (EVITA DESBORDAMIENTOS EN PANTALLA) */
+.sinRegistros {
+  font-size: 12px;
+  color: #94a3b8;
+  padding: 30px;
+  text-align: center;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px dashed #e2e8f0;
+}
+
+.tablaContainer {
+  flex: 1;
   overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
 }
+
+.tabla {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #ffffff;
+}
+
 .tablaHeader {
   display: grid;
   grid-template-columns: 60px 1fr 1fr;
-  padding: 10px 16px;
-  background: var(--gray-50);
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--gray-400);
+  padding: 10px 14px;
+  background: #f8fafc;
+  font-size: 10px;
+  font-weight: 700;
+  color: #64748b;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--gray-100);
+  border-bottom: 1px solid #e2e8f0;
 }
+
+.tablaBody {
+  overflow-y: auto; /* Permite scroll interno de datos de Supabase sin romper el cuadro de la interfaz */
+  max-height: 350px;
+}
+
 .tablaRow {
   display: grid;
   grid-template-columns: 60px 1fr 1fr;
-  padding: 11px 16px;
-  font-size: 13px;
-  color: var(--gray-600);
-  border-bottom: 1px solid var(--gray-100);
-  transition: background 0.1s;
-}
-.tablaRow:last-child { border-bottom: none; }
-.tablaRow:hover { background: var(--gray-50); }
-.rowNum {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--gray-400);
-}
-.hora {
-  font-family: var(--font-mono);
+  padding: 10px 14px;
   font-size: 12px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+  align-items: center;
+}
+
+.tablaRow:last-child {
+  border-bottom: none;
+}
+
+.tablaRow:hover {
+  background: #f8fafc;
+}
+
+.rowNum {
+  font-family: monospace;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.hora {
+  font-family: monospace;
+  color: #475569;
 }

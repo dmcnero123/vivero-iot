@@ -14,6 +14,7 @@ import Camara from '../components/Camara'
 import Historial from '../components/Historial'
 import Parametros from '../components/Parametros'
 import Reportes from '../components/Reportes'
+import Vision from '../components/Vision' // <--- 1. IMPORTAMOS TU COMPONENTE DE IA
 
 import styles from './Dashboard.module.css'
 
@@ -81,7 +82,7 @@ export default function Dashboard({ data, history, connected, onConectar, onEnvi
         return <Camara data={data} />
 
       case 'plagas':
-        return <Proximamente titulo="IA Detección de Plagas" icono="🧠" />
+        return <Vision /> // <--- 2. REEMPLAZAMOS EL PROXIMAMENTE POR TU COMPONENTE REAL
 
       case 'historial':
         return <Historial />
