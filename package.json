@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.0",
+    "ezuikit-js": "^9.0.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-player": "^3.4.0",
     "recharts": "^3.8.1"
   },
   "devDependencies": {

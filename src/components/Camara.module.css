@@ -1,274 +1,222 @@
-/* DISTRIBUCIÓN EN PANTALLA TIPO DASHBOARD UNIFORME */
 .wrapper {
   display: grid;
-  grid-template-columns: 1.2fr 1fr; /* Divide el espacio disponible horizontalmente de forma limpia */
-  gap: 20px;
-  padding: 8px 24px 24px 24px;
-  font-family: "Segoe UI", Roboto, sans-serif;
-  box-sizing: border-box;
-  width: 100%;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 24px;
+  padding: 24px;
+  height: 100%;
 }
 
 .leftColumn, .rightColumn {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
+/* ==================== SECCIONES ==================== */
 .section {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 18px;
-  border: 1px solid #edf2f7;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
-/* Forzar que la sección del historial llene todo el alto vertical disponible de la grilla */
-.historySection {
-  height: 100%;
-  max-height: 485px; 
-}
-
+/* Títulos */
 .sectionTitle {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
-  color: #1e293b;
-  margin: 0;
+  color: #1e2937;
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.badge {
-  background: #10b981;
-  color: white;
-  font-size: 10px;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 1px 6px;
+/* ==================== TARJETA PIR ==================== */
+.pirCard {
+  padding: 20px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
 }
 
-/* COMPONENTE INTERACTIVO PIR */
-.pirCard {
-  border-radius: 8px;
-  padding: 14px;
+.pirActive {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.pirStatus {
   display: flex;
   align-items: center;
   gap: 12px;
-  transition: all 0.2s ease;
 }
 
 .pirDot {
-  width: 11px;
-  height: 11px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: #cbd5e1;
+  background: #94a3b8;
   flex-shrink: 0;
 }
 
 .pirOn {
   background: #ef4444;
-  box-shadow: 0 0 10px #ef4444;
-  animation: pulsoAlerta 1s infinite alternate;
+  box-shadow: 0 0 12px #ef4444;
+  animation: pulse 2s infinite;
 }
 
-@keyframes pulsoAlerta {
-  from { transform: scale(1); opacity: 1; }
-  to { transform: scale(1.12); opacity: 0.7; }
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
 }
 
-.pirInfo {
-  display: flex;
-  flex-direction: column;
+.pirTitle {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1e2937;
 }
 
-.pirDesc {
-  font-size: 11px;
+.pirSubtitle {
+  font-size: 13px;
   color: #64748b;
-  margin-top: 1px;
 }
 
-.pirContador {
-  margin-left: auto;
+.pirCounter {
   text-align: center;
-  background: rgba(0, 0, 0, 0.02);
-  padding: 4px 10px;
-  border-radius: 6px;
 }
 
-.pirNum {
-  display: block;
-  font-family: monospace;
-  font-size: 20px;
+.count {
+  font-size: 28px;
   font-weight: 700;
   color: #10b981;
   line-height: 1;
 }
 
-.pirNumLabel {
-  font-size: 9px;
+.countLabel {
+  font-size: 11px;
   color: #94a3b8;
   text-transform: uppercase;
 }
 
-/* CABECERA DE CÁMARA Y CONFIGURACIÓN DE BOTÓN TÉCNICO */
+/* ==================== CÁMARA ==================== */
 .cameraHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 16px;
 }
 
 .btnVer {
-  background: #2563eb;
-  color: white;
+  padding: 10px 20px;
   border: none;
-  border-radius: 6px;
-  padding: 8px 14px;
-  font-size: 12px;
+  border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s ease;
-  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
+  transition: all 0.2s;
+  background: #3b82f6;
+  color: white;
 }
 
 .btnVer:hover {
-  background: #1d4ed8;
+  background: #2563eb;
 }
 
 .btnActive {
-  background: #dc2626;
-  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
-}
-.btnActive:hover {
-  background: #b91c1c;
+  background: #ef4444;
 }
 
-/* CONTENEDORES DE VIDEO UNIFORMES (ALTURA FIJA CONTROLADA) */
 .streamContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #000;
+  position: relative;
 }
 
 .stream {
   width: 100%;
-  height: 260px;
-  border-radius: 8px;
-  object-fit: cover;
-  border: 1px solid #e2e8f0;
+  height: 360px;
+  border: none;
 }
 
-.simuladorBox {
-  width: 100%;
-  height: 260px;
-  background-color: #0f172a;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #94a3b8;
-  position: relative;
-}
-
-.simuladorTag {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  color: #ef4444;
-  font-weight: bold;
-  font-size: 10px;
-  font-family: monospace;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 2px 6px;
-  border-radius: 3px;
-}
-
+/* Placeholder */
 .placeholderBox {
-  width: 100%;
-  height: 260px;
-  background: #f8fafc;
-  border: 1px dashed #cbd5e1;
-  border-radius: 8px;
+  height: 360px;
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 20px;
+  color: #64748b;
   text-align: center;
 }
 
-/* TABLA HISTÓRICA CON SCROLL INTERNO (EVITA DESBORDAMIENTOS EN PANTALLA) */
-.sinRegistros {
-  font-size: 12px;
-  color: #94a3b8;
-  padding: 30px;
-  text-align: center;
-  background: #f8fafc;
-  border-radius: 8px;
-  border: 1px dashed #e2e8f0;
+.placeholderIcon {
+  font-size: 48px;
+  margin-bottom: 12px;
 }
 
+/* ==================== HISTORIAL ==================== */
 .tablaContainer {
   flex: 1;
   overflow: hidden;
+  border-radius: 16px;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
-}
-
-.tabla {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background: #ffffff;
 }
 
 .tablaHeader {
   display: grid;
-  grid-template-columns: 60px 1fr 1fr;
-  padding: 10px 14px;
+  grid-template-columns: 80px 1fr 1fr;
   background: #f8fafc;
-  font-size: 10px;
-  font-weight: 700;
+  padding: 12px 16px;
+  font-weight: 600;
   color: #64748b;
-  text-transform: uppercase;
+  font-size: 13px;
   border-bottom: 1px solid #e2e8f0;
 }
 
 .tablaBody {
-  overflow-y: auto; /* Permite scroll interno de datos de Supabase sin romper el cuadro de la interfaz */
-  max-height: 350px;
+  max-height: 420px;
+  overflow-y: auto;
 }
 
 .tablaRow {
   display: grid;
-  grid-template-columns: 60px 1fr 1fr;
-  padding: 10px 14px;
-  font-size: 12px;
-  color: #334155;
+  grid-template-columns: 80px 1fr 1fr;
+  padding: 14px 16px;
   border-bottom: 1px solid #f1f5f9;
-  align-items: center;
-}
-
-.tablaRow:last-child {
-  border-bottom: none;
+  font-size: 14px;
+  color: #334155;
 }
 
 .tablaRow:hover {
   background: #f8fafc;
 }
 
-.rowNum {
-  font-family: monospace;
-  font-size: 11px;
-  color: #94a3b8;
+.badge {
+  background: #10b981;
+  color: white;
+  font-size: 12px;
+  padding: 2px 9px;
+  border-radius: 9999px;
+  margin-left: 10px;
 }
 
-.hora {
-  font-family: monospace;
-  color: #475569;
+.sinRegistros {
+  padding: 60px 20px;
+  text-align: center;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
 }

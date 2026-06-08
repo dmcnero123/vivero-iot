@@ -1,174 +1,113 @@
-import { useState, useEffect, useRef } from 'react'
-import { supabase } from '../supabaseClient' 
-import styles from './Camara.module.css'
+import React, { useState, useEffect, useRef } from 'react';
+import { supabase } from '../supabaseClient';
+import styles from './Camara.module.css';
 
-// URL de tu cámara IP perimetral
-const CAMARA_URL = 'rtsp://admin:CODIGO_6_LETRAS@IP_DE_TU_CAMARA:554/H.264'
-
-// Funciones auxiliares para formatear la marca de tiempo de Supabase
-function formatFecha(date) {
-  return date.toLocaleDateString('es', { day: '2-digit', month: '2-digit', year: 'numeric' })
-}
-function formatHora(date) {
-  return date.toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-}
+const CAMARA_IP = "192.168.1.14";   // ← IP actualizada
 
 export default function Camara({ data }) {
-  const [detecciones, setDetecciones] = useState([])
-  const [verCamara, setVerCamara] = useState(false)
-  const [usarSimulador, setUsarSimulador] = useState(false)
-  
-  const pirPrevRef = useRef(false)
-  
-  // Evalúa el estado del sensor PIR proveniente de las props (Node-RED / WebSocket)
-  const pirActivo = data?.PIR === 1 || data?.PIR === '1' || data?.PIR === true
+  const [detecciones, setDetecciones] = useState([]);
+  const [verCamara, setVerCamara] = useState(false);
+  const pirPrevRef = useRef(false);
 
-  // 1. Cargar el registro histórico inicial desde Supabase
+  const pirActivo = data?.PIR === 1 || data?.PIR === '1' || data?.PIR === true;
+
+  // Cargar historial
   useEffect(() => {
-    async function obtenerHistorialSupabase() {
-      try {
-        const { data: registros, error } = await supabase
-          .from('historial_pir')
-          .select('*')
-          .order('id', { ascending: false })
-        
-        if (!error && registros) {
-          setDetecciones(registros)
-        }
-      } catch (err) {
-        console.error("Error al conectar con el histórico de Supabase:", err)
-      }
+    async function obtenerHistorial() {
+      const { data: registros } = await supabase
+        .from('historial_pir')
+        .select('*')
+        .order('id', { ascending: false })
+        .limit(20);
+      if (registros) setDetecciones(registros);
     }
-    obtenerHistorialSupabase()
-  }, [])
+    obtenerHistorial();
+  }, []);
 
-  // 2. Escuchar el estado del hardware en tiempo real e insertar registros de forma automática
+  // Activar cámara al detectar movimiento
   useEffect(() => {
     if (pirActivo && !pirPrevRef.current) {
-      const ahora = new Date()
-      const nuevaFecha = formatFecha(ahora)
-      const nuevaHora = formatHora(ahora)
-
-      // Despliega automáticamente la transmisión en vivo al detectar una intrusión física
-      setVerCamara(true)
-
-      async function guardarAlerta() {
-        try {
-          const { data: insertado, error } = await supabase
-            .from('historial_pir')
-            .insert([{ fecha: nuevaFecha, hora: nuevaHora }])
-            .select()
-
-          if (!error && insertado) {
-            // Actualiza el estado local inmediatamente para pintar la fila en la interfaz
-            setDetecciones(prev => [insertado[0], ...prev])
-          }
-        } catch (err) {
-          console.error("Error al persistir la detección perimetral:", err)
-        }
-      }
-      guardarAlerta()
+      setVerCamara(true);
+      const ahora = new Date();
+      supabase.from('historial_pir').insert([{
+        fecha: ahora.toLocaleDateString('es', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+        hora: ahora.toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' }),
+        tipo: 'Movimiento detectado por PIR'
+      }]);
     }
-    pirPrevRef.current = pirActivo
-  }, [pirActivo])
+    pirPrevRef.current = pirActivo;
+  }, [pirActivo]);
 
   return (
     <div className={styles.wrapper}>
-      
-      {/* COLUMNA IZQUIERDA: MONITOREO DE HARDWARE Y STREAM DE VIDEO */}
       <div className={styles.leftColumn}>
-        
-        {/* PANEL: ESTADO DEL SENSOR */}
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Estado del sensor PIR</h2>
-          <div className={styles.pirCard} style={{
-            border: pirActivo ? '2px solid #ef4444' : '1px solid #e2e8f0',
-            backgroundColor: pirActivo ? '#fef2f2' : '#ffffff'
-          }}>
-            <div className={`${styles.pirDot} ${pirActivo ? styles.pirOn : ''}`} />
-            <div className={styles.pirInfo}>
-              <div style={{ fontSize: '14px', fontWeight: '600', color: pirActivo ? '#b91c1c' : '#1e293b' }}>
-                {pirActivo ? '🚨 Movimiento detectado' : '🟢 Monitoreo estable - Sin movimiento'}
+          <h2 className={styles.sectionTitle}>Estado del Sensor Perimetral</h2>
+          <div className={`${styles.pirCard} ${pirActivo ? styles.pirActive : ''}`}>
+            <div className={styles.pirStatus}>
+              <div className={`${styles.pirDot} ${pirActivo ? styles.pirOn : ''}`} />
+              <div>
+                <div className={styles.pirTitle}>
+                  {pirActivo ? '🚨 MOVIMIENTO DETECTADO' : '🟢 Monitoreo Estable'}
+                </div>
               </div>
-              <div className={styles.pirDesc}>
-                Sensor PIR activo y transmitiendo telemetría de entorno.
-              </div>
-            </div>
-            <div className={styles.pirContador}>
-              <span className={styles.pirNum}>{detecciones.length}</span>
-              <span className={styles.pirNumLabel}>Alertas</span>
             </div>
           </div>
         </section>
 
-        {/* PANEL: FEED DE VIDEO EN VIVO */}
         <section className={styles.section}>
           <div className={styles.cameraHeader}>
-            <h2 className={styles.sectionTitle}>Cámara de seguridad en tiempo real</h2>
+            <h2 className={styles.sectionTitle}>📹 Cámara Ezviz H3 (go2rtc)</h2>
             <button
               className={`${styles.btnVer} ${verCamara ? styles.btnActive : ''}`}
-              onClick={() => setVerCamara(v => !v)}
+              onClick={() => setVerCamara(!verCamara)}
             >
-              {verCamara ? '⏹ Detener stream' : '▶ Transmisión en vivo'}
+              {verCamara ? '⏹ Detener' : '▶ Ver Transmisión'}
             </button>
           </div>
 
-          {verCamara ? (
-            <div className={styles.streamContainer}>
-              {!usarSimulador ? (
-                <img
-                  src={CAMARA_URL}
-                  alt="Stream de seguridad"
-                  className={styles.stream}
-                  onError={() => setUsarSimulador(true)}
-                />
-              ) : (
-                <div className={styles.simuladorBox}>
-                  <div className={styles.simuladorTag}>🔴 LIVE FEED</div>
-                  <span style={{ fontSize: '40px', marginBottom: '8px' }}>🌳</span>
-                  <div style={{ fontSize: '13px', fontWeight: '600', color: '#f1f5f9' }}>
-                    Transmisión activa por evento de hardware
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className={styles.placeholderBox}>
-              <span style={{ fontSize: '28px' }}>📷</span>
-              <div style={{ fontSize: '13px', color: '#64748b', fontWeight: '500' }}>
-                Canal cerrado. Active la transmisión en vivo para visualizar el área de cultivo.
+          <div className={styles.streamContainer}>
+            {verCamara ? (
+              <iframe
+                src="http://localhost:1984/stream.html?src=bonsai"
+                className={styles.stream}
+                title="Cámara go2rtc"
+                allowFullScreen
+              />
+            ) : (
+              <div className={styles.placeholderBox}>
+                <span className={styles.placeholderIcon}>📷</span>
+                <p>Transmisión desactivada</p>
+                <p>Presiona el botón para activar la cámara</p>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </section>
       </div>
 
-      {/* COLUMNA DERECHA: REGISTRO HISTÓRICO DE BASE DE DATOS */}
       <div className={styles.rightColumn}>
-        <section className={`${styles.section} ${styles.historySection}`}>
+        <section className={styles.section}>
           <h2 className={styles.sectionTitle}>
-            Registro Histórico
+            Historial de Movimientos
             {detecciones.length > 0 && <span className={styles.badge}>{detecciones.length}</span>}
           </h2>
 
           {detecciones.length === 0 ? (
-            <div className={styles.sinRegistros}>
-              No se registran eventos activos en la base de datos.
-            </div>
+            <div className={styles.sinRegistros}>No hay movimientos registrados aún</div>
           ) : (
             <div className={styles.tablaContainer}>
               <div className={styles.tabla}>
                 <div className={styles.tablaHeader}>
-                  <span>ID</span>
                   <span>Fecha</span>
-                  <span>Hora de marca</span>
+                  <span>Hora</span>
+                  <span>Evento</span>
                 </div>
                 <div className={styles.tablaBody}>
-                  {detecciones.map((d, i) => (
-                    <div key={d.id || i} className={styles.tablaRow}>
-                      <span className={styles.rowNum}>#{d.id || (detecciones.length - i)}</span>
+                  {detecciones.map((d) => (
+                    <div key={d.id} className={styles.tablaRow}>
                       <span>{d.fecha}</span>
                       <span className={styles.hora}>{d.hora}</span>
+                      <span>{d.tipo || 'Movimiento detectado'}</span>
                     </div>
                   ))}
                 </div>
@@ -177,7 +116,6 @@ export default function Camara({ data }) {
           )}
         </section>
       </div>
-
     </div>
-  )
+  );
 }
